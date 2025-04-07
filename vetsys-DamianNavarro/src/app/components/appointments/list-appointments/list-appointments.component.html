@@ -25,26 +25,26 @@
   </thead>
   <tbody>
     <tr *ngFor="let appt of appointments">
-        <td>{{ appt.id }}</td>
+        <td>{{ appt.appointmentId }}</td>
         <td>{{ appt.patientName }}</td>
         <td>{{ appt.animalType }}</td>
         <td>{{ appt.ownerName }} {{ appt.ownerSurname }}</td>
         <td>{{ appt.appointmentDate }} {{ appt.appointmentTime }}</td>
         <td>{{ appt.appointmentDuration }} mins</td>
         <td>
-        <button [routerLink]="['/appointments/view', appt.id]">View</button>
+        <button [routerLink]="['/appointments/view', appt.appointmentId]">View</button>
 
         <!-- VET or ADMIN can update -->
         <button 
           *ngIf="userRole === 'VET' || userRole === 'ADMIN'" 
-          [routerLink]="['/appointments/update', appt.id]">
+          [routerLink]="['/appointments/update', appt.appointmentId]">
           Edit
         </button>
 
         <!-- Only ADMIN can delete -->
         <button 
           *ngIf="userRole === 'ADMIN'" 
-          (click)="deleteAppointment(appt.id)">
+          (click)="deleteAppointment(appt.appointmentId)">
           Delete
         </button>
       </td>

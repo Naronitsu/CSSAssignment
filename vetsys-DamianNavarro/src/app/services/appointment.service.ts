@@ -32,8 +32,23 @@ export class AppointmentService {
     });
   }  
 
-  updateAppointment(id: number, appointment: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/${id}`, appointment);
+  getAppointmentById(id: number) {
+    const token = localStorage.getItem('token');
+    return this.http.get<any>(`http://localhost:8080/appointment/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+  }
+  
+  updateAppointment(id: number, data: any) {
+    const token = localStorage.getItem('token');
+    return this.http.put(`http://localhost:8080/appointment/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
   }
 
   deleteAppointment(id: number): Observable<any> {
