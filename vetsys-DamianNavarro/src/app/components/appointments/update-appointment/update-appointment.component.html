@@ -1,49 +1,86 @@
-<h2>Update Appointment</h2>
-
-<form (ngSubmit)="updateAppointment()">
-  <label>Patient Name:
-    <input [(ngModel)]="appointment.patientName" name="patientName" required />
-  </label><br /><br />
-
-  <label>Animal Type:
-    <input [(ngModel)]="appointment.animalType" name="animalType" required />
-  </label><br /><br />
-
-  <label>Owner Name:
-    <input [(ngModel)]="appointment.ownerName" name="ownerName" required />
-  </label><br /><br />
-
-  <label>Owner Surname:
-    <input [(ngModel)]="appointment.ownerSurname" name="ownerSurname" required />
-  </label><br /><br />
-
-  <label>Mobile Number:
-    <input [(ngModel)]="appointment.ownerContactNumber" name="ownerContactNumber" required />
-  </label><br /><br />
-
-  <label>ID Card:
-    <input [(ngModel)]="appointment.ownerIdCardNumber" name="ownerIdCardNumber" required />
-  </label><br /><br />
-
-  <label>Appointment Date:
-    <input type="date" [(ngModel)]="appointment.appointmentDate" name="appointmentDate" required />
-  </label><br /><br />
-
-  <label>Appointment Time:
-    <input type="time" [(ngModel)]="appointment.appointmentTime" name="appointmentTime" required />
-  </label><br /><br />
-
-  <label>Duration (minutes):
-    <input type="number" [(ngModel)]="appointment.appointmentDuration" name="appointmentDuration" required />
-  </label><br /><br />
-
-  <label>Reason for Appointment:
-    <input [(ngModel)]="appointment.reasonForAppointment" name="reasonForAppointment" required />
-  </label><br /><br />
-
-  <label>Vet Notes:
-    <input [(ngModel)]="appointment.vetNotes" name="vetNotes" />
-  </label><br /><br />
-
-  <button type="submit">Save Changes</button>
-</form>
+<div class="edit-container">
+    <div class="edit-card">
+      <h2>Edit Appointment</h2>
+      <p>Update the appointment details below.</p>
+  
+      <form (ngSubmit)="updateAppointment()" #editForm="ngForm">
+        <div class="form-grid">
+  
+          <div class="form-group">
+            <label>Patient Name</label>
+            <input [(ngModel)]="appointment.patientName" name="patientName" required />
+          </div>
+  
+          <div class="form-group">
+            <label>Animal Type</label>
+            <select [(ngModel)]="appointment.animalType" name="animalType" required>
+              <option>Dog</option>
+              <option>Cat</option>
+              <option>Rabbit</option>
+              <option>Bird</option>
+              <option>Reptile</option>
+            </select>
+          </div>
+  
+          <div class="form-group">
+            <label>Owner Name</label>
+            <input [(ngModel)]="appointment.ownerName" name="ownerName" required />
+          </div>
+  
+          <div class="form-group">
+            <label>Owner Surname</label>
+            <input [(ngModel)]="appointment.ownerSurname" name="ownerSurname" required />
+          </div>
+  
+          <div class="form-group">
+            <label>Mobile Number</label>
+            <input [(ngModel)]="appointment.ownerContactNumber" name="ownerContactNumber" required />
+          </div>
+  
+          <div class="form-group">
+            <label>ID Card Number</label>
+            <input [(ngModel)]="appointment.ownerIdCardNumber" name="ownerIdCardNumber" required />
+          </div>
+  
+          <div class="form-group">
+            <label>Date</label>
+            <input type="date" [(ngModel)]="appointment.appointmentDate" name="appointmentDate" required />
+          </div>
+  
+          <div class="form-group">
+            <label>Time</label>
+            <input type="time" [(ngModel)]="appointment.appointmentTime" name="appointmentTime" required />
+          </div>
+  
+          <div class="form-group">
+            <label>Duration</label>
+            <select [(ngModel)]="appointment.appointmentDuration" name="appointmentDuration" required>
+              <option value="10">10 mins</option>
+              <option value="15">15 mins</option>
+              <option value="30">30 mins</option>
+            </select>
+          </div>
+  
+          <div class="form-group full-width">
+            <label>Reason for Appointment</label>
+            <input [(ngModel)]="appointment.reasonForAppointment" name="reasonForAppointment" required />
+          </div>
+  
+          <!-- Only editable by vets -->
+          <div class="form-group full-width" *ngIf="userRole === 'VET'">
+            <label>Vet Notes</label>
+            <textarea [(ngModel)]="appointment.vetNotes" name="vetNotes" rows="4"></textarea>
+          </div>
+  
+          <div class="form-group full-width" *ngIf="userRole !== 'VET'">
+            <label>Vet Notes</label>
+            <textarea [(ngModel)]="appointment.vetNotes" name="vetNotes" rows="4" readonly></textarea>
+          </div>
+  
+        </div>
+  
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+  </div>
+  

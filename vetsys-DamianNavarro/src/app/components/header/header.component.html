@@ -1,8 +1,14 @@
-<header style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background-color: #eee;">
+<header>
     <h3>Veterinary Appointment System</h3>
-    <div>
+  
+    <div class="nav-links">
+      <a routerLink="/appointments/add"><i class="fa fa-plus"></i> Add Appointments</a>
+      <a routerLink="/appointments"><i class="fa fa-list"></i> List Appointments</a>
+    </div>
+  
+    <div class="nav-right">
       <span>Logged in as: <strong>{{ userRole }}</strong></span>
-      <button (click)="logout()">Logout</button>
+      <button class="logout-btn" (click)="logout()">Sign out</button>
     </div>
   </header>
   

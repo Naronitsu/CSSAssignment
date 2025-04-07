@@ -1,0 +1,129 @@
+:root {
+    --dark-green: #14281D;
+    --hunter-green: #355834;
+    --field-drab: #6E633D;
+    --ecru: #C2A878;
+    --baby-powder: #F1F5F2;
+  }
+  
+  .list-container {
+    padding: 2rem;
+    background-color: var(--baby-powder);
+    min-height: 100vh;
+  }
+  
+  h2 {
+    text-align: center;
+    color: var(--hunter-green);
+    margin-bottom: 1rem;
+  }
+  
+  .logged-in {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--field-drab);
+  }
+
+  .appointments-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .appointments-header h2 {
+    color: #355834; /* Hunter green */
+    font-weight: bold;
+    font-size: 1.8rem;
+  }
+  
+  
+  .appointments-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--baby-powder);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+  }  
+
+  tbody tr:nth-child(even) {
+    background-color: #E3E8E7; 
+  }
+  
+  
+  th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.95rem;
+  }
+  
+  th {
+    background-color: var(--ecru);
+    color: var(--dark-green);
+    font-weight: bold;
+  }
+  
+  tr:hover {
+    background-color: #f9f9f9;
+  }
+  
+  button {
+    padding: 6px 12px;
+    margin: 0 4px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  button.view {
+    background-color: var(--hunter-green);
+    color: white;
+  }
+  
+  button.edit {
+    background-color: var(--field-drab);
+    color: white;
+  }
+  
+  button.delete {
+    background-color: #d9534f;
+    color: white;
+  }
+  
+  button:hover {
+    filter: brightness(1.1);
+  }
+  .export-buttons {
+    display: flex;
+    gap: 1rem;
+    margin: 20px 0;
+    justify-content: flex-end;
+  }
+  
+  .export-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #355834;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .export-btn:hover {
+    background-color: #2d4b2c;
+  }
+  
+  .export-btn i {
+    font-size: 1rem;
+  }
+  
+  

@@ -1,53 +1,48 @@
-<h2>Appointments</h2>
-
-<!-- Show user's role for debugging -->
-<p>Logged in as: <strong>{{ userRole }}</strong></p>
-
-<!-- Add Appointment button for Receptionist or Admin -->
-<button 
-  *ngIf="userRole === 'RECEPTIONIST' || userRole === 'ADMIN'" 
-  [routerLink]="['/appointments/add']">
-  Add Appointment
-</button>
-
-<!-- Appointment table -->
-<table border="1" cellspacing="0" cellpadding="8">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Patient</th>
-      <th>Animal</th>
-      <th>Owner</th>
-      <th>Date</th>
-      <th>Duration</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let appt of appointments">
-        <td>{{ appt.appointmentId }}</td>
-        <td>{{ appt.patientName }}</td>
-        <td>{{ appt.animalType }}</td>
-        <td>{{ appt.ownerName }} {{ appt.ownerSurname }}</td>
-        <td>{{ appt.appointmentDate }} {{ appt.appointmentTime }}</td>
-        <td>{{ appt.appointmentDuration }} mins</td>
-        <td>
-        <button [routerLink]="['/appointments/view', appt.appointmentId]">View</button>
-
-        <!-- VET or ADMIN can update -->
-        <button 
-          *ngIf="userRole === 'VET' || userRole === 'ADMIN'" 
-          [routerLink]="['/appointments/update', appt.appointmentId]">
-          Edit
+<div class="list-container">
+    <div class="appointments-header">
+        <h2>Appointments</h2>
+      </div>
+      
+      <div class="export-buttons">
+        <button class="export-btn pdf" (click)="exportToPDF()">
+          🧾 Export to PDF
         </button>
-
-        <!-- Only ADMIN can delete -->
-        <button 
-          *ngIf="userRole === 'ADMIN'" 
-          (click)="deleteAppointment(appt.appointmentId)">
-          Delete
+        <button class="export-btn excel" (click)="exportToExcel()">
+          📊 Export to Excel
         </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+      </div>
+      
+
+    <table class="appointments-table">
+        
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Patient</th>
+          <th>Animal</th>
+          <th>Owner</th>
+          <th>Date</th>
+          <th>Duration</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let appt of appointments">
+          <td>{{ appt.appointmentId }}</td>
+          <td>{{ appt.patientName }}</td>
+          <td>{{ appt.animalType }}</td>
+          <td>{{ appt.ownerName }} {{ appt.ownerSurname }}</td>
+          <td>{{ appt.appointmentDate }} {{ appt.appointmentTime }}</td>
+          <td>{{ appt.appointmentDuration }} mins</td>
+          <td>{{ appt.appointmentDate | appointmentStatus:appt.appointmentTime }}</td>
+          <td>
+            <button class="view" [routerLink]="['/appointments/view', appt.appointmentId]">View</button>
+            <button class="edit" *ngIf="userRole === 'VET' || userRole === 'ADMIN'" [routerLink]="['/appointments/update', appt.appointmentId]">Edit</button>
+            <button class="delete" *ngIf="userRole === 'ADMIN'" (click)="deleteAppointment(appt.appointmentId)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

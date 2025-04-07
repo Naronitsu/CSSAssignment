@@ -1,58 +1,109 @@
-<!-- Only allow RECEPTIONIST or ADMIN to use this form -->
-<div *ngIf="userRole === 'RECEPTIONIST' || userRole === 'ADMIN'; else forbidden">
+<form #appointmentForm="ngForm" (ngSubmit)="formSubmitted = true; isDateTimeValid() && appointmentForm.valid && addAppointment()" class="form-container">
+
     <h2>Add Appointment</h2>
   
-    <form (ngSubmit)="addAppointment()">
-      <label>Patient Name:
-        <input [(ngModel)]="appointment.patientName" name="patientName" required />
-      </label><br /><br />
+    <!-- Patient Name -->
+    <div class="form-group">
+      <label for="patientName">Patient Name</label>
+      <input type="text" id="patientName" name="patientName" [(ngModel)]="appointment.patientName" required />
+      <div *ngIf="formSubmitted && !appointmentForm.controls['patientName']?.valid" class="error">
+        Patient name is required.
+      </div>
+    </div>
   
-      <label>Animal Type:
-        <input [(ngModel)]="appointment.animalType" name="animalType" required />
-      </label><br /><br />
+    <!-- Animal Type -->
+    <div class="form-group">
+      <label for="animalType">Animal Type</label>
+      <input type="text" id="animalType" name="animalType" [(ngModel)]="appointment.animalType" required />
+      <div *ngIf="formSubmitted && !appointmentForm.controls['animalType']?.valid" class="error">
+        Animal type is required.
+      </div>
+    </div>
   
-      <label>Owner Name:
-        <input [(ngModel)]="appointment.ownerName" name="ownerName" required />
-      </label><br /><br />
+    <!-- Owner Name -->
+    <div class="form-group">
+      <label for="ownerName">Owner Name</label>
+      <input type="text" id="ownerName" name="ownerName" [(ngModel)]="appointment.ownerName" required />
+      <div *ngIf="formSubmitted && !appointmentForm.controls['ownerName']?.valid" class="error">
+        Owner name is required.
+      </div>
+    </div>
   
-      <label>Owner Surname:
-        <input [(ngModel)]="appointment.ownerSurname" name="ownerSurname" required />
-      </label><br /><br />
+    <!-- Owner Surname -->
+    <div class="form-group">
+      <label for="ownerSurname">Owner Surname</label>
+      <input type="text" id="ownerSurname" name="ownerSurname" [(ngModel)]="appointment.ownerSurname" required />
+      <div *ngIf="formSubmitted && !appointmentForm.controls['ownerSurname']?.valid" class="error">
+        Owner surname is required.
+      </div>
+    </div>
   
-      <label>Mobile Number:
-        <input [(ngModel)]="appointment.ownerContactNumber" name="ownerContactNumber" required />
-      </label><br /><br />
+    <!-- Owner ID Card Number -->
+    <div class="form-group">
+      <label for="ownerIdCardNumber">ID Card Number</label>
+      <input type="text" id="ownerIdCardNumber" name="ownerIdCardNumber" [(ngModel)]="appointment.ownerIdCardNumber"
+             required pattern="^\d+[a-zA-Z]$" />
+      <div *ngIf="formSubmitted && !appointmentForm.controls['ownerIdCardNumber']?.valid" class="error">
+        ID must be numeric followed by one letter (e.g., 123456A).
+      </div>
+    </div>
   
-      <label>ID Card:
-        <input [(ngModel)]="appointment.ownerIdCardNumber" name="ownerIdCardNumber" required />
-      </label><br /><br />
+    <!-- Owner Contact Number -->
+    <div class="form-group">
+      <label for="ownerContactNumber">Contact Number</label>
+      <input type="text" id="ownerContactNumber" name="ownerContactNumber" [(ngModel)]="appointment.ownerContactNumber"
+             required pattern="^[0-9]{8,}$" />
+      <div *ngIf="formSubmitted && !appointmentForm.controls['ownerContactNumber']?.valid" class="error">
+        Mobile number must be numeric, at least 8 digits.
+      </div>
+    </div>
   
-      <label>Appointment Date:
-        <input type="date" [(ngModel)]="appointment.appointmentDate" name="appointmentDate" required />
-      </label><br /><br />
+    <!-- Appointment Date -->
+    <div class="form-group">
+      <label for="appointmentDate">Appointment Date</label>
+      <input type="date" id="appointmentDate" name="appointmentDate" [(ngModel)]="appointment.appointmentDate" required />
+      <div *ngIf="formSubmitted && !appointmentForm.controls['appointmentDate']?.valid" class="error">
+        Appointment date is required.
+      </div>
+    </div>
   
-      <label>Appointment Time:
-        <input type="time" [(ngModel)]="appointment.appointmentTime" name="appointmentTime" required />
-      </label><br /><br />
+    <!-- Appointment Time -->
+    <div class="form-group">
+      <label for="appointmentTime">Appointment Time</label>
+      <input type="time" id="appointmentTime" name="appointmentTime" [(ngModel)]="appointment.appointmentTime" required />
+      <div *ngIf="formSubmitted && !appointmentForm.controls['appointmentTime']?.valid" class="error">
+        Appointment time is required.
+      </div>
+      <div *ngIf="formSubmitted && !isDateTimeValid()" class="error">
+        Appointment must be in the future.
+      </div>
+    </div>
   
-      <label>Duration (minutes):
-        <input type="number" [(ngModel)]="appointment.appointmentDuration" name="appointmentDuration" required />
-      </label><br /><br />
+    <!-- Duration -->
+    <div class="form-group">
+      <label for="appointmentDuration">Duration (minutes)</label>
+      <input type="number" id="appointmentDuration" name="appointmentDuration" [(ngModel)]="appointment.appointmentDuration"
+             required min="5" />
+      <div *ngIf="formSubmitted && !appointmentForm.controls['appointmentDuration']?.valid" class="error">
+        Minimum duration is 5 minutes.
+      </div>
+    </div>
   
-      <label>Reason for Appointment:
-        <input [(ngModel)]="appointment.reasonForAppointment" name="reasonForAppointment" required />
-      </label><br /><br />
+    <!-- Reason -->
+    <div class="form-group">
+      <label for="reasonForAppointment">Reason for Appointment</label>
+      <textarea id="reasonForAppointment" name="reasonForAppointment" [(ngModel)]="appointment.reasonForAppointment" required></textarea>
+      <div *ngIf="formSubmitted && !appointmentForm.controls['reasonForAppointment']?.valid" class="error">
+        Please provide a reason.
+      </div>
+    </div>
   
-      <label>Vet Notes:
-        <input [(ngModel)]="appointment.vetNotes" name="vetNotes" />
-      </label><br /><br />
+    <!-- Vet Notes -->
+    <div class="form-group">
+      <label for="vetNotes">Vet Notes (Optional)</label>
+      <textarea id="vetNotes" name="vetNotes" [(ngModel)]="appointment.vetNotes"></textarea>
+    </div>
   
-      <button type="submit">Submit</button>
-    </form>
-  </div>
-  
-  <!-- Shown if user is not allowed -->
-  <ng-template #forbidden>
-    <p>You are not allowed to add appointments.</p>
-  </ng-template>
+    <button type="submit">Add Appointment</button>
+  </form>
   

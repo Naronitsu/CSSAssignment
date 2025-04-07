@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AppointmentService } from '../../../services/appointment.service';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-update-appointment',
@@ -13,6 +15,7 @@ import { AppointmentService } from '../../../services/appointment.service';
 })
 export class UpdateAppointmentComponent implements OnInit {
   appointmentId: number = 0;
+  userRole = localStorage.getItem('role');
 
   appointment = {
     animalType: '',
@@ -66,12 +69,14 @@ export class UpdateAppointmentComponent implements OnInit {
 
     this.appointmentService.updateAppointment(this.appointmentId, this.appointment).subscribe({
       next: () => {
-        alert('Appointment updated!');
-        this.router.navigate(['/appointments']);
+        Swal.fire({
+          icon: 'success',
+          title: 'Appointment Updated',
+          text: 'Changes have been saved.'
+        }).then(() => this.router.navigate(['/appointments']));        
       },
       error: (err) => {
-        console.error('Error updating appointment:', err);
-        alert('Update failed.');
+        Swal.fire('Error', 'Failed to update appointment.', 'error');
       }
     });
   }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth-service.service'; 
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -21,13 +22,18 @@ export class LoginComponent {
     this.authService.login(this.username, this.password).subscribe({
       next: (response) => {
         console.log('Login successful:', response);
-        localStorage.setItem('role', response.role);
+        Swal.fire({
+          icon: 'success',
+          title: 'Welcome!',
+          text: 'You are now logged in.'
+        }).then(() => this.router.navigate(['/appointments']));        
+        this.authService.setRole(response.role);
         localStorage.setItem('token', response.jwtToken);
         this.router.navigate(['/appointments']); 
       },
       error: (err) => {
+        Swal.fire('Login Failed', 'Invalid credentials. Please try again.', 'error');
         console.error('Login failed:', err);
-        this.error = 'Invalid credentials. Please try again.';
       }
     });
   }

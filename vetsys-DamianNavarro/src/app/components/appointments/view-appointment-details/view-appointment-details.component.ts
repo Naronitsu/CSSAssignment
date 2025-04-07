@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppointmentService } from '../../../services/appointment.service';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-view-appointment',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './view-appointment-details.component.html',
   styleUrls: ['./view-appointment-details.component.css']
 })
@@ -16,7 +17,8 @@ export class ViewAppointmentComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private appointmentService: AppointmentService
+    private appointmentService: AppointmentService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -39,5 +41,9 @@ export class ViewAppointmentComponent implements OnInit {
         console.error('Failed to load appointment:', err);
       }
     });
+  }
+
+  goBack() {
+    this.router.navigate(['/appointments']);
   }
 }

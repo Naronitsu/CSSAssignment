@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppointmentService } from '../../../services/appointment.service';
+import { NgForm } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-appointment',
@@ -40,13 +42,29 @@ export class AddAppointmentComponent {
 
     this.appointmentService.createAppointment(this.appointment).subscribe({
       next: () => {
-        alert('Appointment added successfully!');
-        this.router.navigate(['/appointments']);
+        Swal.fire({
+          icon: 'success',
+          title: 'Appointment Added',
+          text: 'The appointment was successfully saved.'
+        }).then(() => this.router.navigate(['/appointments']));        
       },
       error: (err) => {
-        console.error('Error adding appointment:', err);
-        alert('Failed to add appointment.');
+        Swal.fire('Error', 'Failed to add appointment.', 'error');
       }
     });
   }
+
+  isDateTimeValid(): boolean {
+    const date = new Date(this.appointment.appointmentDate);
+    const [hours, minutes] = this.appointment.appointmentTime.split(':');
+    date.setHours(+hours);
+    date.setMinutes(+minutes);
+    return date > new Date();
+  }
+  
+  formSubmitted = false;
+
+  
 }
+
+
