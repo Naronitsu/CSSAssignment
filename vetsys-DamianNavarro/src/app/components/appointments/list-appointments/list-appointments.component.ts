@@ -12,6 +12,8 @@ import { AppointmentService } from '../../../services/appointment.service';
 })
 export class ListAppointmentsComponent implements OnInit {
   appointments: any[] = [];
+  userRole = localStorage.getItem('role');
+
 
   constructor(private appointmentService: AppointmentService) {}
 
@@ -30,4 +32,6 @@ export class ListAppointmentsComponent implements OnInit {
       }
     });
   }
+
+  deleteAppointment(id: String){}
 }

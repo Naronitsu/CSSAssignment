@@ -1,30 +1,52 @@
 <h2>Appointments</h2>
+
+<!-- Show user's role for debugging -->
+<p>Logged in as: <strong>{{ userRole }}</strong></p>
+
+<!-- Add Appointment button for Receptionist or Admin -->
+<button 
+  *ngIf="userRole === 'RECEPTIONIST' || userRole === 'ADMIN'" 
+  [routerLink]="['/appointments/add']">
+  Add Appointment
+</button>
+
+<!-- Appointment table -->
 <table border="1" cellspacing="0" cellpadding="8">
   <thead>
     <tr>
       <th>ID</th>
-      <th>Patient Name</th>
-      <th>Animal Type</th>
-      <th>Owner Name</th>
-      <th>Owner Surname</th>
-      <th>Date &amp; Time</th>
+      <th>Patient</th>
+      <th>Animal</th>
+      <th>Owner</th>
+      <th>Date</th>
       <th>Duration</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
-    <!-- Loop through appointments array -->
     <tr *ngFor="let appt of appointments">
-      <td>{{ appt.id }}</td>
-      <td>{{ appt.patientName }}</td>
-      <td>{{ appt.animalType }}</td>
-      <td>{{ appt.ownerName }}</td>
-      <td>{{ appt.ownerSurname }}</td>
-      <td>{{ appt.date }}</td>
-      <td>{{ appt.duration }}</td>
-      <td>
+        <td>{{ appt.id }}</td>
+        <td>{{ appt.patientName }}</td>
+        <td>{{ appt.animalType }}</td>
+        <td>{{ appt.ownerName }} {{ appt.ownerSurname }}</td>
+        <td>{{ appt.appointmentDate }} {{ appt.appointmentTime }}</td>
+        <td>{{ appt.appointmentDuration }} mins</td>
+        <td>
         <button [routerLink]="['/appointments/view', appt.id]">View</button>
-        <button [routerLink]="['/appointments/update', appt.id]">Edit</button>
+
+        <!-- VET or ADMIN can update -->
+        <button 
+          *ngIf="userRole === 'VET' || userRole === 'ADMIN'" 
+          [routerLink]="['/appointments/update', appt.id]">
+          Edit
+        </button>
+
+        <!-- Only ADMIN can delete -->
+        <button 
+          *ngIf="userRole === 'ADMIN'" 
+          (click)="deleteAppointment(appt.id)">
+          Delete
+        </button>
       </td>
     </tr>
   </tbody>

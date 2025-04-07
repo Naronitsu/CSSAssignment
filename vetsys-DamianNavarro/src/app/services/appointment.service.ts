@@ -22,9 +22,15 @@ export class AppointmentService {
     return this.http.get(`${this.baseUrl}/appointment`, { headers });
   }
 
-  addAppointment(appointment: any): Observable<any> {
-    return this.http.post(this.baseUrl, appointment);
-  }
+  createAppointment(appt: any) {
+    const token = localStorage.getItem('token');
+    return this.http.post('http://localhost:8080/appointment', appt, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+  }  
 
   updateAppointment(id: number, appointment: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/${id}`, appointment);

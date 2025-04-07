@@ -1,1 +1,58 @@
-<p>add-appointment works!</p>
+<!-- Only allow RECEPTIONIST or ADMIN to use this form -->
+<div *ngIf="userRole === 'RECEPTIONIST' || userRole === 'ADMIN'; else forbidden">
+    <h2>Add Appointment</h2>
+  
+    <form (ngSubmit)="addAppointment()">
+      <label>Patient Name:
+        <input [(ngModel)]="appointment.patientName" name="patientName" required />
+      </label><br /><br />
+  
+      <label>Animal Type:
+        <input [(ngModel)]="appointment.animalType" name="animalType" required />
+      </label><br /><br />
+  
+      <label>Owner Name:
+        <input [(ngModel)]="appointment.ownerName" name="ownerName" required />
+      </label><br /><br />
+  
+      <label>Owner Surname:
+        <input [(ngModel)]="appointment.ownerSurname" name="ownerSurname" required />
+      </label><br /><br />
+  
+      <label>Mobile Number:
+        <input [(ngModel)]="appointment.ownerContactNumber" name="ownerContactNumber" required />
+      </label><br /><br />
+  
+      <label>ID Card:
+        <input [(ngModel)]="appointment.ownerIdCardNumber" name="ownerIdCardNumber" required />
+      </label><br /><br />
+  
+      <label>Appointment Date:
+        <input type="date" [(ngModel)]="appointment.appointmentDate" name="appointmentDate" required />
+      </label><br /><br />
+  
+      <label>Appointment Time:
+        <input type="time" [(ngModel)]="appointment.appointmentTime" name="appointmentTime" required />
+      </label><br /><br />
+  
+      <label>Duration (minutes):
+        <input type="number" [(ngModel)]="appointment.appointmentDuration" name="appointmentDuration" required />
+      </label><br /><br />
+  
+      <label>Reason for Appointment:
+        <input [(ngModel)]="appointment.reasonForAppointment" name="reasonForAppointment" required />
+      </label><br /><br />
+  
+      <label>Vet Notes:
+        <input [(ngModel)]="appointment.vetNotes" name="vetNotes" />
+      </label><br /><br />
+  
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  
+  <!-- Shown if user is not allowed -->
+  <ng-template #forbidden>
+    <p>You are not allowed to add appointments.</p>
+  </ng-template>
+  
