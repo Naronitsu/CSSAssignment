@@ -1,0 +1,31 @@
+<h2>Appointments</h2>
+<table border="1" cellspacing="0" cellpadding="8">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Patient Name</th>
+      <th>Animal Type</th>
+      <th>Owner Name</th>
+      <th>Owner Surname</th>
+      <th>Date &amp; Time</th>
+      <th>Duration</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Loop through appointments array -->
+    <tr *ngFor="let appt of appointments">
+      <td>{{ appt.id }}</td>
+      <td>{{ appt.patientName }}</td>
+      <td>{{ appt.animalType }}</td>
+      <td>{{ appt.ownerName }}</td>
+      <td>{{ appt.ownerSurname }}</td>
+      <td>{{ appt.date }}</td>
+      <td>{{ appt.duration }}</td>
+      <td>
+        <button [routerLink]="['/appointments/view', appt.id]">View</button>
+        <button [routerLink]="['/appointments/update', appt.id]">Edit</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
