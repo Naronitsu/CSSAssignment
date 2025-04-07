@@ -1,1 +1,8 @@
-<p>header works!</p>
+<header style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background-color: #eee;">
+    <h3>Veterinary Appointment System</h3>
+    <div>
+      <span>Logged in as: <strong>{{ userRole }}</strong></span>
+      <button (click)="logout()">Logout</button>
+    </div>
+  </header>
+  
